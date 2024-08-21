@@ -26,10 +26,10 @@ async function main() {
           updated_at: Date.now(),
         },
       ],
+      skipDuplicates: true,
     });
-    console.log('First seed data created');
   } catch (error) {
-    console.log('Seed data exists');
+    console.log('Seed account 2 is exists');
   }
 }
 
