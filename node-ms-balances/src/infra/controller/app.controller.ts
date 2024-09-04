@@ -1,11 +1,17 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
+import {
+  GetByIdAccountUseCase,
+  IGetByIdAccountOutputDto,
+} from 'src/domain/usecase/getByIdAccount/getByIdAccount.usecase';
 
-@Controller()
+@Controller('balances')
 export class AppController {
-  constructor() {}
+  constructor(private getByIdAccountUseCase: GetByIdAccountUseCase) {}
 
-  @Get()
-  getHello(): string {
-    return '';
+  @Get(':id')
+  async getHello(
+    @Param('id') account_id: string,
+  ): Promise<IGetByIdAccountOutputDto> {
+    return await this.getByIdAccountUseCase.execute({ account_id });
   }
 }

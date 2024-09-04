@@ -9,7 +9,11 @@ services:
       - ./go-ms-walletcore/:/app
     ports:
       - 8080:8080
-    command: ['go', 'run', './cmd/walletcore/main.go']
+    command: >
+      sh -c "
+      make migrate_up &&
+      make seed &&
+      go run ./cmd/walletcore/main.go"
 
   mysql-walletcore:
     container_name: mysql-walletcore
@@ -36,8 +40,6 @@ services:
       - /usr/src/app/node_modules
     ports:
       - 3003:3003
-    networks:
-      - ms-node
     command: >
       sh -c "
       npx prisma generate &&
@@ -59,8 +61,6 @@ services:
       MYSQL_PASSWORD: root
     ports:
       - 3307:3306
-    networks:
-      - ms-node
     volumes:
       - mysql-balances:/var/lib/mysql
     healthcheck:
@@ -119,9 +119,6 @@ services:
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
       CONFLUENT_METRICS_TOPIC_REPLICATION: 1
       PORT: 9021
-
-networks:
-  ms-node:
 
 volumes:
   mysql-walletcore:

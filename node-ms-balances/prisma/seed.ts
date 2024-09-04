@@ -19,12 +19,6 @@ async function main() {
           created_at: Date.now(),
           updated_at: Date.now(),
         },
-        {
-          id: '3',
-          balance: 500,
-          created_at: Date.now(),
-          updated_at: Date.now(),
-        },
       ],
       skipDuplicates: true,
     });

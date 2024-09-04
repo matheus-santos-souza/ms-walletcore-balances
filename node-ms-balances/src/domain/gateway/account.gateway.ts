@@ -1,4 +1,4 @@
-import type { Account } from 'src/domain/entity/account.entity';
+import { Account } from 'src/domain/entity/account.entity';
 
 export interface IAccountGateway {
   save(account: Account): Promise<void>;

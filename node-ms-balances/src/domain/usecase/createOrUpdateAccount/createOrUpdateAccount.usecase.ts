@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import type { IUseCase } from '../usecase.interface';
-import type { IAccountGateway } from 'src/domain/gateway/account.gateway';
+import { IUseCase } from '../usecase.interface';
+import { IAccountGateway } from 'src/domain/gateway/account.gateway';
+import { Account } from 'src/domain/entity/account.entity';
 
 export interface ICreateOrUpdateAccountInputDto {
   id: string;
@@ -10,8 +11,6 @@ export interface ICreateOrUpdateAccountInputDto {
 export interface ICreateOrUpdateAccountOutputDto {
   id: string;
   balance: number;
-  created_at: Date;
-  updated_at: Date;
 }
 
 @Injectable()
@@ -27,6 +26,16 @@ export class CreateOrUpdateAccountUseCase
   async execute(
     input: ICreateOrUpdateAccountInputDto,
   ): Promise<ICreateOrUpdateAccountOutputDto> {
-    throw new Error('Method not implemented.');
+    await this.accountGateway.save(
+      new Account({
+        id: input.id,
+        balance: input.balance,
+      }),
+    );
+
+    return {
+      id: input.id,
+      balance: input.balance,
+    };
   }
 }
