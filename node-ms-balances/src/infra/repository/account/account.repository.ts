@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Account } from 'src/domain/entity/account.entity';
 import { IAccountGateway } from 'src/domain/gateway/account.gateway';
-import prismaClient from '../prisma';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AccountRepository implements IAccountGateway {
-  constructor() {}
+  constructor(private readonly prismaClient: PrismaService) {}
 
   async save(account: Account): Promise<void> {
-    await prismaClient.account.upsert({
+    await this.prismaClient.account.upsert({
       create: {
         id: account.id,
         balance: account.balance,
@@ -26,7 +26,7 @@ export class AccountRepository implements IAccountGateway {
   }
 
   async getById(account_id: string): Promise<Account> {
-    const account = await prismaClient.account.findUnique({
+    const account = await this.prismaClient.account.findUnique({
       where: {
         id: account_id,
       },

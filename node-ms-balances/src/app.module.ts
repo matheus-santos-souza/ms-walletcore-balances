@@ -5,6 +5,7 @@ import { CreateOrUpdateAccountUseCase } from './domain/usecase/createOrUpdateAcc
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { GetByIdAccountUseCase } from './domain/usecase/getByIdAccount/getByIdAccount.usecase';
 import { KafkaConsumerController } from './infra/kafka/balancesConsumer/balances.consumer';
+import { PrismaService } from './infra/repository/prisma/prisma.service';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { KafkaConsumerController } from './infra/kafka/balancesConsumer/balances
   ],
   controllers: [AppController, KafkaConsumerController],
   providers: [
+    PrismaService,
     { provide: 'IAccountGateway', useClass: AccountRepository },
     CreateOrUpdateAccountUseCase,
     GetByIdAccountUseCase,
