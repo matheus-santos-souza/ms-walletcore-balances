@@ -26,7 +26,7 @@ export class AccountRepository implements IAccountGateway {
   }
 
   async getById(account_id: string): Promise<Account> {
-    const account = await prismaClient.account.findFirst({
+    const account = await prismaClient.account.findUnique({
       where: {
         id: account_id,
       },

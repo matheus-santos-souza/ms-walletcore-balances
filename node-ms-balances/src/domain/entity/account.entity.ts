@@ -6,7 +6,7 @@ interface IAccountProps {
 }
 
 export class Account {
-  private _id: string;
+  private readonly _id: string;
   private _balance: number;
   private _created_at: number;
   private _updated_at: number;

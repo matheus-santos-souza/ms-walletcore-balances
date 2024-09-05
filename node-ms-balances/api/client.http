@@ -1,0 +1,5 @@
+GET http://localhost:3003/balances/1 HTTP/1.1
+
+###
+
+GET http://localhost:3003/balances/2 HTTP/1.1
